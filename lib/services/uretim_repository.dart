@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:deneme/models/uretim_isemri_model.dart';
-import 'package:deneme/models/uretim_makineler_model.dart';
-import 'package:deneme/models/uretim_model.dart';
-import 'package:deneme/models/uretim_operasyon_model.dart';
-import 'package:deneme/models/users_model.dart';
+import 'package:eskasan/models/uretim_isemri_model.dart';
+import 'package:eskasan/models/uretim_makineler_model.dart';
+import 'package:eskasan/models/uretim_model.dart';
+import 'package:eskasan/models/uretim_operasyon_model.dart';
+import 'package:eskasan/models/users_model.dart';
 import 'package:http/http.dart' as http;
 
 class UretimRepository {

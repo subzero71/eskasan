@@ -1,4 +1,4 @@
-import 'package:deneme/models/uretim_model.dart';
+import 'package:eskasan/models/uretim_model.dart';
 import 'package:get/get.dart';
 
 class UretimController extends GetxController {

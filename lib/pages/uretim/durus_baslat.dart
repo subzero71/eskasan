@@ -1,3 +1,4 @@
+import 'package:eskasan/controllers/durus_baslat_controller.dart';
 import 'package:eskasan/controllers/uretim_baslat_controller.dart';
 import 'package:eskasan/controllers/users_controller.dart';
 import 'package:eskasan/models/uretim_isemri_model.dart';
@@ -12,23 +13,24 @@ import 'package:eskasan/widget/demo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ProductionStartPage extends StatelessWidget {
-  final ProductionStartController productionStartController = Get.put(
-    ProductionStartController(),
+class DowntimeStartPage extends StatelessWidget {
+  final DowntimeStartController downtimeStartController = Get.put(
+    DowntimeStartController(),
   );
   final user = Get.find<UsersController>().loggedInUser.value;
 
-  ProductionStartPage({super.key});
+  DowntimeStartPage({super.key});
 
 
   @override
   Widget build(BuildContext context) {
+    final description = Get.find<DowntimeStartController>().descriptionController;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Üretim Başlat")),
+      appBar: AppBar(title: const Text("Duruş Başlat")),
       body: Demo(
         child: Obx(() {
-          if (productionStartController.isLoading.value) {
+          if (downtimeStartController.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
           }
         
@@ -51,18 +53,18 @@ class ProductionStartPage extends StatelessWidget {
                 // Makine seçimi
                 DropdownSearch<ProductionMachines>(
                   popupProps: PopupProps.menu(showSearchBox: true),
-                  items: productionStartController.machines,
+                  items: downtimeStartController.machines,
                   itemAsString: (ProductionMachines? item) =>
-                      item?.machineName ?? '',
+                  item?.machineName ?? '',
                   dropdownDecoratorProps: DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      labelText: "Makine Seçimi",labelStyle: TextStyle(fontWeight: FontWeight.bold)
+                        labelText: "Makine Seçimi",labelStyle: TextStyle(fontWeight: FontWeight.bold)
                     ),
                   ),
                   onChanged: (value) {
-                    productionStartController.selectedMachine.value = value;
+                    downtimeStartController.selectedMachine.value = value;
                   },
-                  selectedItem: productionStartController.selectedMachine.value,
+                  selectedItem: downtimeStartController.selectedMachine.value,
                 ),
         
                 SizedBox(height: Dimensions.height13),
@@ -70,18 +72,18 @@ class ProductionStartPage extends StatelessWidget {
                 // Operasyon seçimi
                 DropdownSearch<ProductionOperations>(
                   popupProps: PopupProps.menu(showSearchBox: true),
-                  items: productionStartController.operations,
+                  items: downtimeStartController.operations,
                   itemAsString: (ProductionOperations? item) =>
-                      item?.operationName ?? '',
+                  item?.operationName ?? '',
                   dropdownDecoratorProps: DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      labelText: "Operasyon Seçimi",labelStyle: TextStyle(fontWeight: FontWeight.bold)
+                        labelText: "Operasyon Seçimi",labelStyle: TextStyle(fontWeight: FontWeight.bold)
                     ),
                   ),
                   onChanged: (value) {
-                    productionStartController.selectedOperation.value = value;
+                    downtimeStartController.selectedOperation.value = value;
                   },
-                  selectedItem: productionStartController.selectedOperation.value,
+                  selectedItem: downtimeStartController.selectedOperation.value,
                 ),
         
                 SizedBox(height: Dimensions.height13),
@@ -89,19 +91,42 @@ class ProductionStartPage extends StatelessWidget {
                 // İş emri seçimi
                 DropdownSearch<ProductionWorkOrders>(
                   popupProps: PopupProps.menu(showSearchBox: true),
-                  items: productionStartController.workOrders,
+                  items: downtimeStartController.workOrders,
                   itemAsString: (ProductionWorkOrders? item) =>
-                      item?.workOrderNo ?? '',
+                  item?.workOrderNo ?? '',
                   dropdownDecoratorProps: DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      labelText: "İş Emri Seçimi",labelStyle: TextStyle(fontWeight: FontWeight.bold)
+                        labelText: "İş Emri Seçimi",labelStyle: TextStyle(fontWeight: FontWeight.bold)
                     ),
                   ),
                   onChanged: (value) {
-                    productionStartController.selectedWorkOrder.value = value;
+                    downtimeStartController.selectedWorkOrder.value = value;
                   },
-                  selectedItem: productionStartController.selectedWorkOrder.value,
+                  selectedItem: downtimeStartController.selectedWorkOrder.value,
                 ),
+                SizedBox(height: Dimensions.height13),
+                DropdownSearch<ProductionWorkOrders>(
+                  popupProps: PopupProps.menu(showSearchBox: true),
+                  items: downtimeStartController.workOrders,
+                  itemAsString: (ProductionWorkOrders? item) =>
+                  item?.workOrderNo ?? '',
+                  dropdownDecoratorProps: DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                        labelText: "Duruş Tipi Seçimi",labelStyle: TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                  ),
+                  onChanged: (value) {
+                    downtimeStartController.selectedWorkOrder.value = value;
+                  },
+                  selectedItem: downtimeStartController.selectedWorkOrder.value,
+                ),
+                SizedBox(height: Dimensions.height13),
+        
+                TextField(controller: description,
+                  decoration: InputDecoration(
+                      labelText: "Açıklama",
+                      border: OutlineInputBorder()
+                  ),),
                 SizedBox(height: Dimensions.height20),
         
                 Column(
@@ -110,37 +135,27 @@ class ProductionStartPage extends StatelessWidget {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                         onPressed: () {
-                          if (productionStartController.selectedWorkOrder.value ==
+                          if (downtimeStartController.selectedWorkOrder.value ==
+                              null ||
+                              downtimeStartController.selectedMachine.value ==
                                   null ||
-                              productionStartController.selectedMachine.value ==
-                                  null ||
-                              productionStartController.selectedOperation == null ||
-                              productionStartController.selectedOperator == null) {
+                              downtimeStartController.selectedOperation == null ||
+                              downtimeStartController.selectedOperator == null) {
                             Get.snackbar("Uyarı", "Lütfen tüm alanları seçin");
                             return;
                           }
-                          print("${productionStartController.selectedOperation}");
-                          Get.to(ProductionTime(), arguments: {
-                           // "operator": productionStartController.selectedOperator.value,
-                            "user":user,
-                            "machine": productionStartController.selectedMachine.value,
-                            "operation":productionStartController.selectedOperation.value,
-                            "workOrder":productionStartController.selectedWorkOrder.value,
-        
-        
-        
-                          });
+                          print("${downtimeStartController.selectedOperation}");
+                          Get.snackbar("Duruş Başlatıldı",colorText: Colors.white, "",backgroundColor: Colors.green,duration: Duration(seconds: 1));
         
         
                         },
-                        child: Text("Başlat",style: TextStyle(color: Colors.white),),
+                        child: Text("Duruş Başlat",style: TextStyle(color: Colors.white),),
+        
                       ),
+        
                     ),
                     SizedBox(height: Dimensions.height8,),
-                    Center(
-                      child: ElevatedButton(onPressed: (){Get.to(HomePage());}, child: Text("Ana Menü",style: TextStyle(color: Colors.white),),style: ElevatedButton.styleFrom(backgroundColor: Colors.pinkAccent),),
-                    )
-        
+                    Center(child: ElevatedButton(onPressed: (){Get.to(HomePage());}, child: Text("Ana Menü",style: TextStyle(color: Colors.white),),style: ElevatedButton.styleFrom(backgroundColor: Colors.pinkAccent),),)
                   ],
                 ),
               ],

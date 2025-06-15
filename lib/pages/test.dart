@@ -1,6 +1,6 @@
-import 'package:deneme/controllers/users_controller.dart';
-import 'package:deneme/pages/home_page.dart';
-import 'package:deneme/utils/dimensions.dart';
+import 'package:eskasan/controllers/users_controller.dart';
+import 'package:eskasan/pages/home_page.dart';
+import 'package:eskasan/utils/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,6 +1,6 @@
-import 'package:deneme/models/users_model.dart';
-import 'package:deneme/services/uretim_repository.dart';
-import 'package:deneme/services/users_repository.dart';
+import 'package:eskasan/models/users_model.dart';
+import 'package:eskasan/services/uretim_repository.dart';
+import 'package:eskasan/services/users_repository.dart';
 import 'package:get/get.dart';
 
 class UsersController extends GetxController {

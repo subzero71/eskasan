@@ -1,11 +1,13 @@
-import 'package:deneme/controllers/users_controller.dart';
-import 'package:deneme/pages/test.dart';
+import 'package:eskasan/controllers/users_controller.dart';
+import 'package:eskasan/pages/test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 import 'utils/dimensions.dart';
 
 void main() {
+  //debugPaintSizeEnabled = true;
   runApp(MyApp());
 }
 
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
 
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Üretim",
+      title: "Safirsoft",
       theme: ThemeData(
         primarySwatch: Colors.orange,
         appBarTheme: AppBarTheme(

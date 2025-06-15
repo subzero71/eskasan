@@ -1,4 +1,4 @@
-import 'package:deneme/utils/dimensions.dart';
+import 'package:eskasan/utils/dimensions.dart';
 import 'package:flutter/material.dart';
 
 class AboutUs extends StatelessWidget {

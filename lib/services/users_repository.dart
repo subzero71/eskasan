@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:deneme/models/users_model.dart';
+import 'package:eskasan/models/users_model.dart';
 import 'package:http/http.dart' as http;
 
 class UsersRepository{
